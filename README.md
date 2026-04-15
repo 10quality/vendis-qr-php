@@ -1,5 +1,11 @@
 # Vendis QR PHP
-Typed PHP 8.2 SDK for the Vendis dynamic QR payment REST API.
+
+[![Latest Stable Version](https://poser.pugx.org/10quality/vendis-qr-php/v/stable)](https://packagist.org/packages/10quality/vendis-qr-php)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/10quality/emizor-php/tests.yml)
+[![Total Downloads](https://poser.pugx.org/10quality/vendis-qr-php/downloads)](https://packagist.org/packages/10quality/vendis-qr-php)
+[![License](https://poser.pugx.org/10quality/vendis-qr-php/license)](https://packagist.org/packages/10quality/vendis-qr-php)
+
+PHP SDK for the Vendis dynamic QR payment REST API.
 ## Installation
 ```bash
 composer require 10quality/vendis-qr-php
