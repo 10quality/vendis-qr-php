@@ -35,7 +35,7 @@ final class WebhookTest extends TestCase
         self::assertSame(['success' => false, 'message' => 'error message'], CallbackResponse::error('error message'));
     }
     /**
-     * It validates optional bearer callback tokens.
+     * It validates bearer callback tokens against the access token when present.
      *
      * @since 1.0.0
      */
@@ -45,11 +45,21 @@ final class WebhookTest extends TestCase
         self::assertFalse(CallbackValidator::isValid('Bearer other', 'secret'));
     }
     /**
-     * It requires an expected callback token.
+     * It accepts callbacks without an Authorization header.
      *
      * @since 1.0.0
      */
-    public function testItRequiresExpectedCallbackToken(): void
+    public function testItAcceptsMissingCallbackAuthorization(): void
+    {
+        self::assertTrue(CallbackValidator::isValid(null, null));
+        self::assertTrue(CallbackValidator::isValid('', null));
+    }
+    /**
+     * It requires an access token when callback authorization is present.
+     *
+     * @since 1.0.0
+     */
+    public function testItRequiresAccessTokenToValidatePresentCallbackAuthorization(): void
     {
         $this->expectException(ConfigurationException::class);
         CallbackValidator::isValid('Bearer secret', null);

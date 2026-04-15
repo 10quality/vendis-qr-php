@@ -235,7 +235,3 @@ El primer paso es obtener el token (vigencia de 1 año). Cuando caduque, debe so
 | `payment_bank`    | Cadena     | Nombre del banco |
 | `description`     | Cadena     | La glosa que tendrá el QR. Se adicionará a “SN<####>” más la descripción enviada. Ejemplo: “SN2342 PAGOS EMPRESA CUSTOM” |
 | `status`          | Cadena     | Estado del QR. Valores posibles:<br>• **Pendiente** – QR solicitado pero no pagado<br>• **Anulado** – QR anulado<br>• **Pagado** – QR pagado<br>• **Fallido** – QR no pudo ser creado |
-
----
-
-**Listo.** Este es el documento completo convertido a Markdown limpio, con diagramas replicados fielmente y explicados paso a paso. Puedes copiarlo directamente a cualquier editor Markdown (GitHub, Notion, Obsidian, etc.) y los diagramas Mermaid se renderizarán automáticamente.

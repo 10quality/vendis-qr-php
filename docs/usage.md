@@ -31,13 +31,14 @@ foreach ($status->payments() as $payment) {
 ```
 Known statuses are represented by `VendisQr\Enums\QrStatus`: `Pending`, `Cancelled`, `Paid`, and `Failed`.
 ## Webhooks
-Vendis sends a callback after payment. If you configure an optional callback bearer token, validate it before processing the payload.
+Vendis sends a callback after payment. The callback Authorization header is optional in the official documentation. When Vendis sends it, validate the bearer value against the same yearly access token used to create and inspect QR codes.
 ```php
 <?php
 use VendisQr\Webhooks\CallbackPayload;
 use VendisQr\Webhooks\CallbackResponse;
 use VendisQr\Webhooks\CallbackValidator;
-if (!CallbackValidator::isValid($_SERVER['HTTP_AUTHORIZATION'] ?? null, getenv('VENDIR_QR_WEBHOOK_TOKEN') ?: null)) {
+$configuration = Configuration::fromEnvironment();
+if (!CallbackValidator::isValid($_SERVER['HTTP_AUTHORIZATION'] ?? null, $configuration->accessToken())) {
     return CallbackResponse::error('Unauthorized');
 }
 $payload = new CallbackPayload($request->all());
@@ -45,11 +46,9 @@ return CallbackResponse::success();
 ```
 ## Environment Variables
 Use `VENDIR_QR_*` for all package configuration:
-1. `VENDIR_QR_ENVIRONMENT`
-2. `VENDIR_QR_BASE_URL`
-3. `VENDIR_QR_EMAIL`
-4. `VENDIR_QR_PASSWORD`
-5. `VENDIR_QR_TOKEN_NAME`
-6. `VENDIR_QR_ACCESS_TOKEN`
-7. `VENDIR_QR_TIMEOUT`
-8. `VENDIR_QR_WEBHOOK_TOKEN`
+1. `VENDIR_QR_BASE_URL`
+2. `VENDIR_QR_EMAIL`
+3. `VENDIR_QR_PASSWORD`
+4. `VENDIR_QR_TOKEN_NAME`
+5. `VENDIR_QR_ACCESS_TOKEN`
+6. `VENDIR_QR_TIMEOUT`

@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 namespace VendisQr;
-use VendisQr\Enums\Environment;
 use VendisQr\Exceptions\ConfigurationException;
 /**
  * Immutable SDK configuration loaded from explicit values or environment variables.
@@ -10,11 +9,6 @@ use VendisQr\Exceptions\ConfigurationException;
  */
 final class Configuration
 {
-    /**
-     * @var Environment Vendis target environment.
-     * @since 1.0.0
-     */
-    private Environment $environment;
     /**
      * @var string Base URL for Vendis API requests.
      * @since 1.0.0
@@ -46,25 +40,18 @@ final class Configuration
      */
     private int $timeout;
     /**
-     * @var string|null Optional callback bearer token expected from Vendis webhooks.
-     * @since 1.0.0
-     */
-    private ?string $webhookToken;
-    /**
      * Creates SDK configuration.
      *
-     * @param Environment $environment Vendis target environment.
      * @param string $baseUrl Base URL for Vendis API requests.
      * @param string|null $email API email used to request the yearly access token.
      * @param string|null $password API password used to request the yearly access token.
      * @param string $tokenName Token name sent to the login endpoint.
      * @param string|null $accessToken Yearly bearer token used for QR requests.
      * @param int $timeout HTTP timeout in seconds.
-     * @param string|null $webhookToken Optional callback bearer token expected from Vendis webhooks.
      * @throws ConfigurationException When configuration values are invalid.
      * @since 1.0.0
      */
-    public function __construct(Environment $environment, string $baseUrl, ?string $email = null, ?string $password = null, string $tokenName = 'Vendis QR PHP', ?string $accessToken = null, int $timeout = 30, ?string $webhookToken = null)
+    public function __construct(string $baseUrl, ?string $email = null, ?string $password = null, string $tokenName = 'Vendis QR PHP', ?string $accessToken = null, int $timeout = 30)
     {
         if (trim($baseUrl) === '') {
             throw new ConfigurationException('Vendis QR base URL is required.');
@@ -72,14 +59,12 @@ final class Configuration
         if ($timeout < 1) {
             throw new ConfigurationException('Vendis QR timeout must be greater than zero.');
         }
-        $this->environment = $environment;
         $this->baseUrl = rtrim($baseUrl, '/');
         $this->email = self::emptyToNull($email);
         $this->password = self::emptyToNull($password);
         $this->tokenName = $tokenName;
         $this->accessToken = self::emptyToNull($accessToken);
         $this->timeout = $timeout;
-        $this->webhookToken = self::emptyToNull($webhookToken);
     }
     /**
      * Creates configuration from VENDIR_QR_* environment variables.
@@ -90,17 +75,7 @@ final class Configuration
      */
     public static function fromEnvironment(): self
     {
-        return new self(Environment::fromString(self::env('VENDIR_QR_ENVIRONMENT', 'sandbox') ?? 'sandbox'), self::env('VENDIR_QR_BASE_URL') ?? '', self::env('VENDIR_QR_EMAIL'), self::env('VENDIR_QR_PASSWORD'), self::env('VENDIR_QR_TOKEN_NAME', 'Vendis QR PHP') ?? 'Vendis QR PHP', self::env('VENDIR_QR_ACCESS_TOKEN'), (int) (self::env('VENDIR_QR_TIMEOUT', '30') ?? '30'), self::env('VENDIR_QR_WEBHOOK_TOKEN'));
-    }
-    /**
-     * Returns Vendis target environment.
-     *
-     * @return Environment Vendis target environment.
-     * @since 1.0.0
-     */
-    public function environment(): Environment
-    {
-        return $this->environment;
+        return new self(self::env('VENDIR_QR_BASE_URL') ?? '', self::env('VENDIR_QR_EMAIL'), self::env('VENDIR_QR_PASSWORD'), self::env('VENDIR_QR_TOKEN_NAME', 'Vendis QR PHP') ?? 'Vendis QR PHP', self::env('VENDIR_QR_ACCESS_TOKEN'), (int) (self::env('VENDIR_QR_TIMEOUT', '30') ?? '30'));
     }
     /**
      * Returns the normalized API base URL.
@@ -163,16 +138,6 @@ final class Configuration
         return $this->timeout;
     }
     /**
-     * Returns the configured webhook bearer token.
-     *
-     * @return string|null Configured webhook bearer token.
-     * @since 1.0.0
-     */
-    public function webhookToken(): ?string
-    {
-        return $this->webhookToken;
-    }
-    /**
      * Creates a copy with a different access token.
      *
      * @param string $accessToken Yearly bearer token.
@@ -181,7 +146,7 @@ final class Configuration
      */
     public function withAccessToken(string $accessToken): self
     {
-        return new self($this->environment, $this->baseUrl, $this->email, $this->password, $this->tokenName, $accessToken, $this->timeout, $this->webhookToken);
+        return new self($this->baseUrl, $this->email, $this->password, $this->tokenName, $accessToken, $this->timeout);
     }
     /**
      * Reads an environment variable without allocating fallback arrays.

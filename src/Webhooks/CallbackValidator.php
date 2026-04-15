@@ -12,19 +12,22 @@ use function trim;
 final class CallbackValidator
 {
     /**
-     * Validates an Authorization header against an expected token.
+     * Validates a Vendis callback Authorization header when it is present.
      *
      * @param string|null $authorizationHeader Incoming Authorization header.
-     * @param string|null $expectedToken Expected bearer token.
+     * @param string|null $accessToken Yearly Vendis access token.
      * @return bool True when callback authentication is valid.
-     * @throws ConfigurationException When an expected token is required but missing.
+     * @throws ConfigurationException When the header is present but the access token is missing.
      * @since 1.0.0
      */
-    public static function isValid(?string $authorizationHeader, ?string $expectedToken): bool
+    public static function isValid(?string $authorizationHeader, ?string $accessToken): bool
     {
-        if ($expectedToken === null || trim($expectedToken) === '') {
-            throw new ConfigurationException('A Vendis QR webhook token is required to validate callback authorization.');
+        if ($authorizationHeader === null || trim($authorizationHeader) === '') {
+            return true;
         }
-        return hash_equals('Bearer ' . $expectedToken, (string) $authorizationHeader);
+        if ($accessToken === null || trim($accessToken) === '') {
+            throw new ConfigurationException('A Vendis QR access token is required to validate callback authorization.');
+        }
+        return hash_equals('Bearer ' . $accessToken, $authorizationHeader);
     }
 }

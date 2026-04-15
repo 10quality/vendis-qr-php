@@ -7,16 +7,14 @@ composer require 10quality/vendis-qr-php
 ## Configuration
 The SDK reads `VENDIR_QR_*` environment variables, matching the requested project prefix.
 ```dotenv
-VENDIR_QR_ENVIRONMENT=sandbox
 VENDIR_QR_BASE_URL=https://your-vendis-base-url.example
 VENDIR_QR_EMAIL=vendisqr@example.com
 VENDIR_QR_PASSWORD=secret
 VENDIR_QR_TOKEN_NAME="Laravel App"
 VENDIR_QR_ACCESS_TOKEN="yearly-token-from-login"
 VENDIR_QR_TIMEOUT=30
-VENDIR_QR_WEBHOOK_TOKEN="optional-callback-token"
 ```
-Vendis provides account-specific sandbox and production base URLs. Keep both URLs in framework configuration and select them with `VENDIR_QR_ENVIRONMENT`.
+Vendis provides account-specific sandbox and production base URLs. The configured `VENDIR_QR_BASE_URL` is the source of truth for which environment the SDK calls. Vendis may send the same yearly access token in the callback Authorization header; when that header is present, validate it against `VENDIR_QR_ACCESS_TOKEN`.
 ## Usage
 ```php
 <?php
