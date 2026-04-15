@@ -1,0 +1,36 @@
+{
+    "name": "10quality/vendis-qr-php",
+    "description": "Typed PHP SDK for Vendis dynamic QR payment API.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "VendisQr\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "VendisQr\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:coverage": "php -d xdebug.mode=coverage vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpunit/phpunit": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -1,0 +1,6 @@
+# Dependencies
+/vendor
+/.phpunit.cache
+
+# Prompts
+prompt.md
