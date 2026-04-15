@@ -3,6 +3,13 @@
     "description": "Typed PHP SDK for Vendis dynamic QR payment API.",
     "type": "library",
     "license": "MIT",
+    "archive": {
+        "exclude": [
+            "/.agents",
+            "/.github",
+            "/tests"
+        ]
+    },
     "autoload": {
         "psr-4": {
             "VendisQr\\": "src/"
