@@ -29,28 +29,28 @@ final class ConfigurationTest extends TestCase
         self::assertSame('new-token', $configuration->withAccessToken('new-token')->accessToken());
     }
     /**
-     * It loads VENDIR_QR prefixed environment values.
+     * It loads VENDIS_QR prefixed environment values.
      *
      * @since 1.0.0
      */
     public function testItLoadsEnvironmentVariables(): void
     {
-        putenv('VENDIR_QR_BASE_URL=https://vendis.example.test');
-        putenv('VENDIR_QR_EMAIL=vendis@example.test');
-        putenv('VENDIR_QR_PASSWORD=password');
-        putenv('VENDIR_QR_TOKEN_NAME=Laravel');
-        putenv('VENDIR_QR_ACCESS_TOKEN=yearly');
-        putenv('VENDIR_QR_TIMEOUT=9');
+        putenv('VENDIS_QR_BASE_URL=https://vendis.example.test');
+        putenv('VENDIS_QR_EMAIL=vendis@example.test');
+        putenv('VENDIS_QR_PASSWORD=password');
+        putenv('VENDIS_QR_TOKEN_NAME=Laravel');
+        putenv('VENDIS_QR_ACCESS_TOKEN=yearly');
+        putenv('VENDIS_QR_TIMEOUT=9');
         $configuration = Configuration::fromEnvironment();
         self::assertSame('https://vendis.example.test', $configuration->baseUrl());
         self::assertSame('Laravel', $configuration->tokenName());
         self::assertSame(9, $configuration->timeout());
-        putenv('VENDIR_QR_BASE_URL');
-        putenv('VENDIR_QR_EMAIL');
-        putenv('VENDIR_QR_PASSWORD');
-        putenv('VENDIR_QR_TOKEN_NAME');
-        putenv('VENDIR_QR_ACCESS_TOKEN');
-        putenv('VENDIR_QR_TIMEOUT');
+        putenv('VENDIS_QR_BASE_URL');
+        putenv('VENDIS_QR_EMAIL');
+        putenv('VENDIS_QR_PASSWORD');
+        putenv('VENDIS_QR_TOKEN_NAME');
+        putenv('VENDIS_QR_ACCESS_TOKEN');
+        putenv('VENDIS_QR_TIMEOUT');
     }
     /**
      * It rejects invalid configuration values.

@@ -67,7 +67,7 @@ final class Configuration
         $this->timeout = $timeout;
     }
     /**
-     * Creates configuration from VENDIR_QR_* environment variables.
+     * Creates configuration from VENDIS_QR_* environment variables.
      *
      * @return self Loaded configuration.
      * @throws ConfigurationException When required configuration is missing.
@@ -75,7 +75,7 @@ final class Configuration
      */
     public static function fromEnvironment(): self
     {
-        return new self(self::env('VENDIR_QR_BASE_URL') ?? '', self::env('VENDIR_QR_EMAIL'), self::env('VENDIR_QR_PASSWORD'), self::env('VENDIR_QR_TOKEN_NAME', 'Vendis QR PHP') ?? 'Vendis QR PHP', self::env('VENDIR_QR_ACCESS_TOKEN'), (int) (self::env('VENDIR_QR_TIMEOUT', '30') ?? '30'));
+        return new self(self::env('VENDIS_QR_BASE_URL') ?? '', self::env('VENDIS_QR_EMAIL'), self::env('VENDIS_QR_PASSWORD'), self::env('VENDIS_QR_TOKEN_NAME', 'Vendis QR PHP') ?? 'Vendis QR PHP', self::env('VENDIS_QR_ACCESS_TOKEN'), (int) (self::env('VENDIS_QR_TIMEOUT', '30') ?? '30'));
     }
     /**
      * Returns the normalized API base URL.

@@ -45,10 +45,10 @@ $payload = new CallbackPayload($request->all());
 return CallbackResponse::success();
 ```
 ## Environment Variables
-Use `VENDIR_QR_*` for all package configuration:
-1. `VENDIR_QR_BASE_URL`
-2. `VENDIR_QR_EMAIL`
-3. `VENDIR_QR_PASSWORD`
-4. `VENDIR_QR_TOKEN_NAME`
-5. `VENDIR_QR_ACCESS_TOKEN`
-6. `VENDIR_QR_TIMEOUT`
+Use `VENDIS_QR_*` for all package configuration:
+1. `VENDIS_QR_BASE_URL`
+2. `VENDIS_QR_EMAIL`
+3. `VENDIS_QR_PASSWORD`
+4. `VENDIS_QR_TOKEN_NAME`
+5. `VENDIS_QR_ACCESS_TOKEN`
+6. `VENDIS_QR_TIMEOUT`

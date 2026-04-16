@@ -11,16 +11,16 @@ PHP SDK for the Vendis dynamic QR payment REST API.
 composer require 10quality/vendis-qr-php
 ```
 ## Configuration
-The SDK reads `VENDIR_QR_*` environment variables, matching the requested project prefix.
+The SDK reads `VENDIS_QR_*` environment variables.
 ```dotenv
-VENDIR_QR_BASE_URL=https://your-vendis-base-url.example
-VENDIR_QR_EMAIL=vendisqr@example.com
-VENDIR_QR_PASSWORD=secret
-VENDIR_QR_TOKEN_NAME="Laravel App"
-VENDIR_QR_ACCESS_TOKEN="yearly-token-from-login"
-VENDIR_QR_TIMEOUT=30
+VENDIS_QR_BASE_URL=https://your-vendis-base-url.example
+VENDIS_QR_EMAIL=vendisqr@example.com
+VENDIS_QR_PASSWORD=secret
+VENDIS_QR_TOKEN_NAME="Laravel App"
+VENDIS_QR_ACCESS_TOKEN="yearly-token-from-login"
+VENDIS_QR_TIMEOUT=30
 ```
-Vendis provides account-specific sandbox and production base URLs. The configured `VENDIR_QR_BASE_URL` is the source of truth for which environment the SDK calls. Vendis may send the same yearly access token in the callback Authorization header; when that header is present, validate it against `VENDIR_QR_ACCESS_TOKEN`.
+Vendis provides account-specific sandbox and production base URLs. The configured `VENDIS_QR_BASE_URL` is the source of truth for which environment the SDK calls. Vendis may send the same yearly access token in the callback Authorization header; when that header is present, validate it against `VENDIS_QR_ACCESS_TOKEN`.
 ## Usage
 ```php
 <?php
@@ -36,7 +36,7 @@ $status = $client->getQrStatus($qr->id());
 ## Yearly Access Token Best Practices
 The Vendis token is valid for one year. In Laravel, store it encrypted in a durable store such as the database or secrets manager, cache it with an expiry slightly before the real expiration, and refresh it through a scheduled command before it expires. Do not request a new token for every QR operation.
 Recommended Laravel flow:
-1. Add `VENDIR_QR_EMAIL`, `VENDIR_QR_PASSWORD`, and environment-specific base URLs to `.env`.
+1. Add `VENDIS_QR_EMAIL`, `VENDIS_QR_PASSWORD`, and environment-specific base URLs to `.env`.
 2. Create an artisan command that calls `login()` and stores the returned token encrypted.
 3. Schedule the command monthly or at least before the one-year expiration date.
 4. Inject the token into `Configuration::fromEnvironment()->withAccessToken($storedToken)` for QR generation and status checks.
